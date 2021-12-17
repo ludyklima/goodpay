@@ -1,1 +1,8 @@
-
+.campoLogin{
+    padding: 0.5rem;
+    margin: 0.8rem;
+}
+.trancaTela{
+    max-width: 1080px;
+    margin: 0 auto;
+}
