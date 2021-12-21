@@ -1,27 +1,47 @@
-import userLogin from "./moduloDados.js";
+import comunicacaoModal from './moduloComunicacaoDados.js'
+import userLogin from './moduloDados.js'
 
-class ControlerUserLogin{
-    constructor(status){
-        this.status = status;
-    }
-    checkLogin(){
-        this.status = true;
-    }
-    loginInfo(user, senha) {
-        var infoCheck = userLogin.find((userLogin) => userLogin.username === user);
-        if (!infoCheck) {
-            alert("Usuário não existe.")
+class ControlerUserLogin {
+  constructor(status) {
+    this.status = status
+  }
+  checkLogin() {
+    this.status = true
+  }
+
+  loginInfo(user, senha) {
+    var infoCheck = userLogin.find(userLogin => userLogin.username === user)
+
+    // Verifica se as informações vieram
+    if (user === null || senha === null || user === '' || senha === '') {
+      return comunicacaoModal.find(
+        comunicacaoModal => comunicacaoModal.idModal === 'camposVazios1'
+      )
+
+      // Verifica se as informações existem
+    } else {
+      if (!infoCheck) {
+        return comunicacaoModal.find(
+          comunicacaoModal => comunicacaoModal.idModal === 'usuarioNaoExiste1'
+        )
+
+        // Confirma se a senha está válida
+      } else {
+        if (infoCheck.senha === senha) {
+          this.checkLogin()
+          return comunicacaoModal.find(
+            comunicacaoModal => comunicacaoModal.idModal === 'loginExecutado1'
+          )
+
+          // Caso a senha não seja válida
         } else {
-               console.log(infoCheck);
-               if (infoCheck.senha === senha) {
-                   this.checkLogin();
-                   alert(`Você está: ${this.status}`);
-        } else {
-            alert("Não logou!");
+          return comunicacaoModal.find(
+            comunicacaoModal => comunicacaoModal.idModal === 'falhaLogin1'
+          )
         }
-    }   
+      }
+    }
+  }
 }
-}
-
-const controlerUserLogin = new ControlerUserLogin();
+const controlerUserLogin = new ControlerUserLogin()
 export default controlerUserLogin
