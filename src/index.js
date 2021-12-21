@@ -1,26 +1,21 @@
-import controlerUserLogin from "./moduloInterface.js";
+import controlerUserLogin from './moduloInterface.js'
+import comunicacaoModal from './moduloComunicacaoDados.js'
 
-//Trazendo elementos do Bootstrap para uso da main no JavaScript.
+// Trazendo elementos do Bootstrap para uso da main Javascript
+var myModal = new bootstrap.Modal(document.getElementById('myModal'))
 
-var myModal = new bootstrap.Modal(document.getElementById("myModal"))
+// Trazendo os botões do DOM em HTML
+const entrarUsuario = document.getElementById('btnEntrar')
+entrarUsuario.addEventListener('click', event => {
+  let user = document.getElementById('usuario').value,
+    senha = document.getElementById('senha').value
+  let alertModal = controlerUserLogin.loginInfo(user, senha)
 
-//Trazendo os botões da DOM em HTML.
+  // Inserindo as informações no Modal
+  document.getElementById('titleModal').innerHTML = alertModal.title
+  document.getElementById('bodyModal').innerHTML = alertModal.bodyModal
+  document.getElementById('btnModalClose').innerHTML = alertModal.b1
+  document.getElementById('btnModalSave').innerHTML = alertModal.b2
 
-const entrarUsuario = document.getElementById("btnEntrar");
-entrarUsuario.addEventListener("click", (event) => {
-    let user = document.getElementById("usuario").value,
-    senha = document.getElementById("senha").value;
-
-//Testando se os campos não estão vazios.
-
-    if(!user || user===null || user==="" || !senha || senha===null || senha===""){
-        alert("Campos Vazios, não há como executar o login.");
-        document.getElementById("titleModal").innerHTML="Campos Vazios";
-        document.getElementById("bodyModal").innerHTML="Os campos não podem estar vazios!";
-        document.getElementById("btnModalClose").innerHTML="Fechar";
-        document.getElementById("btnModalSalve").innerHTML="Salvar";
-        myModal.show();
-    }else{
-        controlerUserLogin.loginInfo(user, senha);
-    }
-});
+  myModal.show()
+})
